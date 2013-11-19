@@ -36,9 +36,6 @@ class Node {
   public boolean isNull()   { return false; }  // nil  // done
   public boolean isPair()   { return false; }  // Cons // done
 
-  // TODO: Report an error in these default methods and implement them
-  // in class Cons.  After setCar, a Cons cell needs to be `parsed' again
-  // using parseList.
   
   public static void print(Node t, int n, boolean p) { t.print(n, p); }
   public static Node getCar(Node t) { return t.getCar(); }
@@ -57,7 +54,6 @@ class Node {
   }
   public String getName() { return ""; }
   public Node eval(Environment e){
-        //DO This!
         return null;//something;
     }
   public Node apply(Node args){

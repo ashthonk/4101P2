@@ -11,11 +11,14 @@ class IntLit extends Node {
   public int getInt(){
       return intVal;
   }
+  @Override
+  public String getName(){
+      return Integer.toString(intVal);
+  }
   public boolean isNumber() { return true; }
 
   @Override 
   public Node eval(Environment e){
-      System.out.println("IntLit called. Returning itself");
       return this;
   }
 }

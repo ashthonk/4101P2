@@ -4,7 +4,7 @@ class BooleanLit extends Node {
   private static BooleanLit True=null;
   private static BooleanLit False=null;
   
-  private BooleanLit(boolean b) {
+  public BooleanLit(boolean b) {
     booleanVal = b;
   }
   public boolean getBoolean(){

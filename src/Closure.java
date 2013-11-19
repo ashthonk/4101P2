@@ -18,7 +18,7 @@ class Closure extends Node
     public Node getFun()		{ return fun; }
     public Environment getEnv()		{ return env; }
     public boolean isProcedure()	{ return true; }
-
+    private Node args;
     public void print(int n) 
     {
 	for (int i = 0; i < n; i++) System.out.print(' ');
@@ -30,29 +30,23 @@ class Closure extends Node
 
     @Override
     public Node eval(Environment e){
-        //DO This!
-        return null;//something;
+          return null;
     }
-    //TODO: The method apply() should be overwritten only in classes builtin and closure
     public Node apply (Node args) 
     {
-        //1) Takes the environment out of the closure,
-        Environment takeout = new Environment(env); //May need to re-cons takeout to env
-        Node tempfun = fun.getCar();
-        Node tempargs = args;
-        Node toreturn = null;
-        //2) Adds a new frame for the function call, 
-        //3) Defines bindings for the parameters with the argument values in the new frame,
-        while(!tempfun.isNull() && !tempargs.isNull()){
-            takeout.define(tempfun.getCar(), tempargs.getCar());
-            tempfun = tempfun.getCdr();
-            tempargs = tempargs.getCdr();
+
+        Environment takeout = new Environment(env); 
+        this.args = args;
+        Node holder = fun.getCdr().getCar();
+
+        while(!holder.isNull() && !args.isNull()){
+
+            takeout.define(holder.getCar(), args.getCar().eval(takeout));
+            
+            holder = holder.getCdr(); args  = args.getCdr();
         }
-        //4) Evaluates the function body.
-        
-        while(!tempfun.isNull()){
-        toreturn = fun.getCdr().getCar().eval(takeout);
-        }
-	return toreturn;
+
+        Node eval = fun.getCdr().getCdr().getCar().eval(takeout);   
+        return eval;
     }
 }

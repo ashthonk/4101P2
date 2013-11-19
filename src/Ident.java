@@ -15,14 +15,15 @@ class Ident extends Node {
   @Override
   public Node eval(Environment e){
       
-      
+      //e.print(0);
       Node holder = e.lookup(this);
-      System.out.println("Ident called. Looking up ident: "+ this.getName());
-      System.out.println(holder);
-      System.out.print("Ident was called, and " + holder + " was ");
-      if (e.lookup(this) == null) System.out.println("not found.");
-      else System.out.println("found!");
-      if(e.lookup(this) == null){return null;}
-      else { return e.lookup(this);}
+      //System.out.println(holder.getCar());
+      if(holder == null){return null;}
+      else if (holder.isProcedure()){
+      //    System.out.println(this);
+          return this.eval(e);
+      }
+      else return holder;
   }
+  
 }

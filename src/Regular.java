@@ -14,23 +14,31 @@ class Regular extends Special {
     
     @Override
     public Node eval(Environment e){
-        System.out.println("In Regular, checking some stuff");
-        if(data.getCar().isSymbol()){
-            System.out.println("We're about to get a BuiltIn");
-            System.out.println("Bout to get " + data.getCar().getName() + " of type " + data.getCar().getClass() + " and it is a procedure? " + data.getCar().isProcedure());
-            return null;
-        }
-        //Node etest = e.lookup(data.getCar());
-      /*  if(data.getCar().getClass().equals(new Ident("test").getClass())  && e.lookup(data.getCar()).isProcedure()){
-            System.out.println("Going down");
-	    Node procWithArgs = data.getCar().apply(data.getCdr().eval(e));
-	    return procWithArgs.eval(e);
-        }*/
-        else{
-        System.out.println(data.getCar());
-    System.out.println("In Regular~ Call wasn't a cons. Evaluating Car and Cdr..this will have to be fixed!");    
-    //return data.getCar().eval(e);
-    return new Cons(data.getCar().eval(e),data.getCdr().eval(e));
-        }
+        Node car = data.getCar();
+        Node cdr = data.getCdr();
+
+        Node temp  = e.lookup(car);
+           if (car.isSymbol() && temp != null && temp.isProcedure()){ 
+                   return temp.apply(cdr).eval(e);
+             } else if(car.isProcedure()){
+               return car.apply(cdr);
+                   }
+             else{   
+               //System.out.println("About to call lambda");
+                 Node careval = car.eval(e);
+                //System.out.println("Lambda finished: " + careval.getInt());
+                 Node cdreval = cdr;
+                 //System.out.println("Did I make it here?" + cdreval.getInt());
+                 if (careval != null && careval.isNull()) {;return cdreval;}
+                 else if (cdreval != null && cdreval.isNull()){
+                     return careval;}
+                 else{
+                    return new Cons(careval, cdreval).eval(e);
+                    
+      }
+        
     }
+    
 }
+}
+

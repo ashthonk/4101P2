@@ -1,10 +1,6 @@
 import java.io.*;
 class Begin extends Special {
- 
-    // TODO: Add any fields needed.
-
-        private Node data;
-    // TODO: Add an appropriate constructor.
+         private Node data;
 	public Begin(Node t){data = t;}
     void print(Node t, int n, boolean p) {
     	  Printer.printBegin(t, n, p);

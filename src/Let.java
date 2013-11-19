@@ -12,6 +12,18 @@ class Let extends Special {
     }
     @Override
     public Node eval(Environment e){
-        return null;
+        Environment tempenv = new Environment(e);
+        Node travnode = data.getCdr();
+        //System.out.println("Travnode: " + travnode);
+        Node varassign = travnode.getCar(); //((v1 a1)(v2 a2)...)
+        //System.out.println("Varassign: ");
+        //Apply Args
+        while(!varassign.isNull()){
+            //System.out.println("~~~~~~~!~!~");
+            //ystem.out.println(varassign.getCar().getCar() + " " +varassign.getCar().getCdr().eval(tempenv) );
+            tempenv.define(varassign.getCar().getCar(), varassign.getCar().getCdr().eval(tempenv));
+            varassign = varassign.getCdr();
+        }
+        return travnode.getCdr().eval(tempenv);
     }
 }

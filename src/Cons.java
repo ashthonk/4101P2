@@ -62,7 +62,6 @@ class Cons extends Node {
     public Node getCdr(){return cdr;}
    @Override
    public Node eval(Environment e){
-       System.out.println("Eval being called by cons on form; " + form.getClass());
        return form.eval(e);
    }
 
